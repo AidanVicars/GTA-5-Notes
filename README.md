@@ -11,6 +11,7 @@ A record of my findings while reversing GTA V
 - Behaviours
 - Signatures
 - Structs
+- Natives
 
 
 ## Signatures
@@ -57,3 +58,10 @@ public:
     CPed* local_ped;
 }
 ```
+
+## Native Notes
+### PLAYER::PLAYER_ID
+Works by accessing the local net player from `CNetGamePlayerMgr + 0xE8` then reading the player id from the net player at `0x21`
+### PLAYER::GET_PLAYER_PED_SCRIPT_INDEX
+Works by reading the local ped from `CPedFactory + 0x8` but if the player id passed is non-zero and the game is online then it retrieves the net player from the array found in `CNetGamePlayerMgr + 0x180` then accessing the CPlayerInfo at `CNetGamePlayer + 0xA0` from there it reads the ped ptr at `CPlayerInfo + 0x1E8`
+
